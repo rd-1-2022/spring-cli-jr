@@ -32,8 +32,8 @@ assemble:
 #       owner: rd-1-2022
 #       name: homebrew-spring-cli-tap
 
-
-# distributions:
-#   demo:
-#     artifacts:
-#       - path: build/libs/{{distributionName}}-{{projectVersion}}.jar
+distributions:
+  spring-cli:
+    type: SINGLE_JAR
+    artifacts:
+      - path: build/libs/{{distributionName}}-{{projectVersion}}.jar
