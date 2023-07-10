@@ -8,8 +8,10 @@ jobs:
   step1:
     uses: ./.github/workflows/jr-build.yml
   step2:
+    needs: [step1]
     uses: ./.github/workflows/jr-assemble.yml
   step:
+    needs: [step2]
     uses: ./.github/workflows/jr-release.yml
 
   # build:
