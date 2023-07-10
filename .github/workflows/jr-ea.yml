@@ -1,0 +1,62 @@
+name: Early Access
+
+on:
+  workflow_dispatch:
+
+jobs:
+
+  build:
+    runs-on: ubuntu-latest
+    name: Build
+    steps:
+      - uses: actions/checkout@v3
+
+      - uses: actions/setup-java@v3
+        with:
+          distribution: adopt
+          java-version: 17
+          cache: gradle
+
+      - run: ./gradlew build -x test --no-daemon
+
+      - name: Release
+        uses: jreleaser/release-action@v2
+        with:
+          version: early-access
+          arguments: assemble
+
+
+      - uses: actions/upload-artifact@v3
+        with:
+          name: fatjar
+          path: build/libs/*.jar
+          retention-days: 1
+
+      - uses: actions/upload-artifact@v3
+        with:
+          name: javaarchive
+          path: out/jreleaser/assemble/spring-cli/java-archive/*.zip
+          retention-days: 1
+
+  release:
+    runs-on: ubuntu-latest
+    name: Release
+    needs: [build]
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+
+      - name: Download fatjar
+        uses: actions/download-artifact@v3
+        with:
+          name: fatjar
+          path: build/libs
+
+      - name: Release
+        uses: jreleaser/release-action@v2
+        with:
+          version: early-access
+          arguments: full-release
+        env:
+          JRELEASER_GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
