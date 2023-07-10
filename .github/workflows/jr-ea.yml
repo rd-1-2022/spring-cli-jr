@@ -53,6 +53,12 @@ jobs:
           name: fatjar
           path: build/libs
 
+      - name: Download javaarchive
+        uses: actions/download-artifact@v3
+        with:
+          name: javaarchive
+          path: out/jreleaser/assemble/spring-cli/java-archive
+
       - name: Release
         uses: jreleaser/release-action@v2
         with:
