@@ -22,7 +22,7 @@ assemble:
 
 release:
   github:
-    tagName: '{{projectVersion}}'
+    releaseName: '{{projectVersion}}'
 
 distributions:
   spring-cli:
