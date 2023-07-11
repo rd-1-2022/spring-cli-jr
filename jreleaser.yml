@@ -20,6 +20,10 @@ assemble:
       mainJar:
         path: build/libs/{{distributionName}}-{{projectVersion}}.jar
 
+release:
+  github:
+    tagName: '{{projectVersion}}'
+
 distributions:
   spring-cli:
     type: SINGLE_JAR
