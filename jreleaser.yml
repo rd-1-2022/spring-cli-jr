@@ -19,6 +19,8 @@ assemble:
       active: ALWAYS
       mainJar:
         path: build/libs/{{distributionName}}-{{projectVersion}}.jar
+      executable:
+        name: spring
 
 release:
   github:
