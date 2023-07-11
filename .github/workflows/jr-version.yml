@@ -34,5 +34,5 @@ jobs:
             echo "version=$releaseVersion" >> $GITHUB_OUTPUT
           else
             echo "ref=main" >> $GITHUB_OUTPUT
-            echo "version=early-access" >> $GITHUB_OUTPUT
+            echo "version=$snapshotVersion" >> $GITHUB_OUTPUT
           fi
