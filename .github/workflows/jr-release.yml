@@ -33,7 +33,7 @@ jobs:
       - name: Release
         uses: jreleaser/release-action@v2
         with:
-          version: ${{ inputs.version }}
           arguments: full-release
         env:
           JRELEASER_GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          JRELEASER_PROJECT_VERSION: ${{ inputs.version }}

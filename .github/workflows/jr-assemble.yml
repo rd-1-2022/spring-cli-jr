@@ -27,8 +27,9 @@ jobs:
       - name: JR Assemble
         uses: jreleaser/release-action@v2
         with:
-          version: ${{ inputs.version }}
           arguments: assemble
+        env:
+          JRELEASER_PROJECT_VERSION: ${{ inputs.version }}
       - uses: actions/upload-artifact@v3
         with:
           name: javaarchive
