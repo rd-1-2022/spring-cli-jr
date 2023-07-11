@@ -20,20 +20,12 @@ assemble:
       mainJar:
         path: build/libs/{{distributionName}}-{{projectVersion}}.jar
 
-# release:
-#   github:
-#     owner: rd-1-2022
-#     name: spring-cli-jr
-
-# packagers:
-#   brew:
-#     active: ALWAYS
-#     tap:
-#       owner: rd-1-2022
-#       name: homebrew-spring-cli-tap
-
 distributions:
   spring-cli:
     type: SINGLE_JAR
     artifacts:
       - path: build/libs/{{distributionName}}-{{projectVersion}}.jar
+    brew:
+      active: ALWAYS
+      tap:
+        name: homebrew-spring-cli-jr
