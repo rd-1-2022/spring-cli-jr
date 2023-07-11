@@ -32,7 +32,23 @@ jobs:
             sed -i "s/version=$snapshotVersion/version=$releaseVersion/" gradle.properties
             echo "ref=$releaseVersion" >> $GITHUB_OUTPUT
             echo "version=$releaseVersion" >> $GITHUB_OUTPUT
+            git config --global user.name github-actions[bot]
+            git config --global user.email 41898282+github-actions[bot]@users.noreply.github.com
+            git checkout -b $releaseVersion
+            git commit -a -m "Release $releaseVersion"
+            git tag "v$releaseVersion"
+            git push origin $releaseVersion --tags
           else
             echo "ref=main" >> $GITHUB_OUTPUT
             echo "version=$snapshotVersion" >> $GITHUB_OUTPUT
           fi
+
+      # - name: Tag Release
+      #   env:
+      #     PROJECT_VERSION: ${{ env.PROJECT_VERSION }}
+      #   run: |
+      #     git config --global user.name github-actions[bot]
+      #     git config --global user.email 41898282+github-actions[bot]@users.noreply.github.com
+      #     git checkout -b $PROJECT_VERSION
+      #     git commit -a -m "Release $PROJECT_VERSION"
+      #     git tag "v$PROJECT_VERSION"

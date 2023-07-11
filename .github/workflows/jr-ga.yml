@@ -2,11 +2,31 @@ name: GA
 
 on:
   workflow_dispatch:
+    inputs:
+      version:
+        description: 'Release version like, 1.0.0, 1.0.0-RC1, etc'
+        required: true
 
 jobs:
 
-  build:
-    runs-on: ubuntu-latest
-    name: Build
-    steps:
-      - uses: actions/checkout@v3
+  precheck:
+    uses: ./.github/workflows/jr-version.yml
+    with:
+      version: ${{ github.event.inputs.version }}
+  step1:
+    needs: [precheck]
+    uses: ./.github/workflows/jr-build.yml
+    with:
+      ref: ${{ needs.precheck.outputs.ref }}
+  step2:
+    needs: [precheck,step1]
+    uses: ./.github/workflows/jr-assemble.yml
+    with:
+      ref: ${{ needs.precheck.outputs.ref }}
+      version: ${{ needs.precheck.outputs.version }}
+  step3:
+    needs: [precheck,step2]
+    uses: ./.github/workflows/jr-release.yml
+    with:
+      ref: ${{ needs.precheck.outputs.ref }}
+      version: ${{ needs.precheck.outputs.version }}
