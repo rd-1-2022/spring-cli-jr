@@ -23,6 +23,7 @@ jobs:
   step3:
     needs: [precheck,step2]
     uses: ./.github/workflows/jr-release.yml
+    secrets: inherit
     with:
       ref: ${{ needs.precheck.outputs.ref }}
       version: ${{ needs.precheck.outputs.version }}
