@@ -2,6 +2,14 @@ name: JR Assemble
 
 on:
   workflow_call:
+    inputs:
+      ref:
+        required: true
+        type: string
+      version:
+        required: true
+        type: string
+
 
 jobs:
   assemble:
@@ -10,7 +18,7 @@ jobs:
     steps:
       - uses: actions/checkout@v3
         with:
-          fetch-depth: 0
+          ref: ${{ inputs.ref }}
       - name: Download fatjar
         uses: actions/download-artifact@v3
         with:
@@ -19,7 +27,7 @@ jobs:
       - name: JR Assemble
         uses: jreleaser/release-action@v2
         with:
-          version: early-access
+          version: ${{ inputs.version }}
           arguments: assemble
       - uses: actions/upload-artifact@v3
         with:

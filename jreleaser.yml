@@ -1,6 +1,6 @@
 project:
   name: spring-cli
-  version: 0.0.1-SNAPSHOT
+  # version: 0.0.1-SNAPSHOT
   description: Spring Cli
   longDescription: Spring Cli
   authors:

@@ -5,73 +5,25 @@ on:
 
 jobs:
 
+  precheck:
+    uses: ./.github/workflows/jr-version.yml
+    with:
+      version:
   step1:
+    needs: [precheck]
     uses: ./.github/workflows/jr-build.yml
+    with:
+      ref: ${{ needs.precheck.outputs.ref }}
   step2:
-    needs: [step1]
+    needs: [precheck,step1]
     uses: ./.github/workflows/jr-assemble.yml
-  step:
-    needs: [step2]
+    with:
+      ref: ${{ needs.precheck.outputs.ref }}
+      version: ${{ needs.precheck.outputs.version }}
+  step3:
+    needs: [precheck,step2]
     uses: ./.github/workflows/jr-release.yml
+    with:
+      ref: ${{ needs.precheck.outputs.ref }}
+      version: ${{ needs.precheck.outputs.version }}
 
-  # build:
-  #   runs-on: ubuntu-latest
-  #   name: Build
-  #   steps:
-  #     - uses: actions/checkout@v3
-
-  #     - uses: actions/setup-java@v3
-  #       with:
-  #         distribution: adopt
-  #         java-version: 17
-  #         cache: gradle
-
-  #     - run: ./gradlew build -x test --no-daemon
-
-  #     - name: Release
-  #       uses: jreleaser/release-action@v2
-  #       with:
-  #         version: early-access
-  #         arguments: assemble
-
-
-  #     - uses: actions/upload-artifact@v3
-  #       with:
-  #         name: fatjar
-  #         path: build/libs/*.jar
-  #         retention-days: 1
-
-  #     - uses: actions/upload-artifact@v3
-  #       with:
-  #         name: javaarchive
-  #         path: out/jreleaser/assemble/spring-cli/java-archive/*.zip
-  #         retention-days: 1
-
-  # release:
-  #   runs-on: ubuntu-latest
-  #   name: Release
-  #   needs: [build]
-  #   steps:
-  #     - uses: actions/checkout@v3
-  #       with:
-  #         fetch-depth: 0
-
-  #     - name: Download fatjar
-  #       uses: actions/download-artifact@v3
-  #       with:
-  #         name: fatjar
-  #         path: build/libs
-
-  #     - name: Download javaarchive
-  #       uses: actions/download-artifact@v3
-  #       with:
-  #         name: javaarchive
-  #         path: out/jreleaser/assemble/spring-cli/java-archive
-
-  #     - name: Release
-  #       uses: jreleaser/release-action@v2
-  #       with:
-  #         version: early-access
-  #         arguments: full-release
-  #       env:
-  #         JRELEASER_GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
