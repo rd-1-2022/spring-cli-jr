@@ -1,3 +1,7 @@
+environment:
+  properties:
+    jpackageDir: out/jreleaser/assemble/spring-cli-installer/jpackage
+
 project:
   name: spring-cli
   description: Spring Cli
@@ -21,6 +25,58 @@ assemble:
       executable:
         name: spring
 
+  jlink:
+    spring-cli-jlink:
+      active: ALWAYS
+      exported: false
+      jdeps:
+        multiRelease: base
+        ignoreMissingDeps: true
+      additionalModuleNames:
+        - java.desktop
+      mainJar:
+        path: 'build/libs/spring-cli-{{projectVersion}}.jar'
+      targetJdks:
+        - path: 'build/jdks/graal17Linux/graalvm-ce-java17-22.3.0'
+          platform: 'linux-x86_64'
+        - path: 'build/jdks/graal17Osx/graalvm-ce-java17-22.3.0/Contents/Home/'
+          platform: 'osx-x86_64'
+        - path: 'build/jdks/graal17Windows/graalvm-ce-java17-22.3.0'
+          platform: 'windows-x86_64'
+
+  jpackage:
+    spring-cli-installer:
+      active: ALWAYS
+      exported: true
+      jlink: spring-cli-jlink
+      applicationPackage:
+        appName: spring
+        appVersion: '{{projectVersionNumber}}'
+        vendor: Spring
+
+      mainJar:
+        path: 'build/libs/{{distributionName}}-{{projectVersion}}.jar'
+      java:
+        mainClass: org.springframework.boot.loader.JarLauncher
+      osx:
+        types: [pkg]
+        appName: Spring CLI
+        packageName: Spring CLI
+        packageIdentifier: org.springframework.experimental.springcli
+        # icon: 'src/media/jreleaser.icns'
+        # resourceDir: 'src/spring-cli/osx'
+      linux:
+        types: [deb]
+        # types: [deb,rpm]
+        maintainer: jreleaser@kordamp.org
+        # icon: 'src/media/icon_256x256.png'
+      windows:
+        types: [msi]
+        console: true
+        dirChooser: true
+        # icon: 'src/media/jreleaser.ico'
+        # resourceDir: 'src/spring-cli/windows'
+
 release:
   github:
     releaseName: '{{projectVersion}}'
@@ -34,3 +90,18 @@ distributions:
       active: ALWAYS
       tap:
         name: homebrew-spring-cli-jr
+  spring-cli-installer:
+    type: NATIVE_PACKAGE
+    artifacts:
+      - path: '{{jpackageDir}}/spring-{{projectVersionNumber}}-osx-x86_64.pkg'
+        transform: '{{distributionName}}/{{distributionName}}-{{projectEffectiveVersion}}-osx-x86_64.pkg'
+        platform: 'osx-x86_64'
+      - path: '{{jpackageDir}}/spring_{{projectVersionNumber}}-1_amd64.deb'
+        transform: '{{distributionName}}/{{distributionName}}_{{projectEffectiveVersion}}-1_amd64.deb'
+        platform: 'linux-x86_64'
+      # - path: '{{jpackageDir}}/spring-{{projectVersionNumber}}-1.x86_64.rpm'
+      #   transform: '{{distributionName}}/{{distributionName}}-{{projectEffectiveVersion}}-1.x86_64.rpm'
+      #   platform: 'linux-x86_64'
+      - path: '{{jpackageDir}}/spring-{{projectVersionNumber}}-windows-x86_64.msi'
+        transform: '{{distributionName}}/{{distributionName}}-{{projectEffectiveVersion}}-windows-x86_64.msi'
+        platform: 'windows-x86_64'
