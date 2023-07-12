@@ -58,11 +58,11 @@ assemble:
         path: 'build/libs/{{distributionName}}-{{projectVersion}}.jar'
       java:
         mainClass: org.springframework.boot.loader.JarLauncher
-      osx:
-        types: [pkg]
-        appName: Spring CLI
-        packageName: Spring CLI
-        packageIdentifier: org.springframework.experimental.springcli
+      # osx:
+      #   types: [pkg]
+      #   appName: Spring CLI
+      #   packageName: Spring CLI
+      #   packageIdentifier: org.springframework.experimental.springcli
         # icon: 'src/media/jreleaser.icns'
         # resourceDir: 'src/spring-cli/osx'
       linux:
@@ -92,9 +92,9 @@ distributions:
   spring-cli-installer:
     type: NATIVE_PACKAGE
     artifacts:
-      - path: '{{jpackageDir}}/spring-{{projectVersionNumber}}-osx-x86_64.pkg'
-        transform: '{{distributionName}}/{{distributionName}}-{{projectEffectiveVersion}}-osx-x86_64.pkg'
-        platform: 'osx-x86_64'
+      # - path: '{{jpackageDir}}/spring-{{projectVersionNumber}}-osx-x86_64.pkg'
+      #   transform: '{{distributionName}}/{{distributionName}}-{{projectEffectiveVersion}}-osx-x86_64.pkg'
+      #   platform: 'osx-x86_64'
       - path: '{{jpackageDir}}/spring_{{projectVersionNumber}}-1_amd64.deb'
         transform: '{{distributionName}}/{{distributionName}}_{{projectEffectiveVersion}}-1_amd64.deb'
         platform: 'linux-x86_64'
