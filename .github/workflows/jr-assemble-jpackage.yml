@@ -44,6 +44,12 @@ jobs:
         with:
           name: jlink
           path: out/jreleaser/assemble/spring-cli-jlink/jlink
+      - name: Expand jlink
+        shell: bash
+        run: |
+          cd out/jreleaser/assemble/spring-cli-jlink/jlink
+          ls -l
+          unzip -q -d work-${{ matrix.job.platform }} jreleaser-standalone-${{ inputs.version }}-${{ matrix.job.platform }}.zip
       - name: JR Assemble
         uses: jreleaser/release-action@v2
         with:

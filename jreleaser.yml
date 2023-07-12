@@ -66,8 +66,7 @@ assemble:
         # icon: 'src/media/jreleaser.icns'
         # resourceDir: 'src/spring-cli/osx'
       linux:
-        types: [deb]
-        # types: [deb,rpm]
+        types: [deb,rpm]
         maintainer: jreleaser@kordamp.org
         # icon: 'src/media/icon_256x256.png'
       windows:
@@ -99,9 +98,9 @@ distributions:
       - path: '{{jpackageDir}}/spring_{{projectVersionNumber}}-1_amd64.deb'
         transform: '{{distributionName}}/{{distributionName}}_{{projectEffectiveVersion}}-1_amd64.deb'
         platform: 'linux-x86_64'
-      # - path: '{{jpackageDir}}/spring-{{projectVersionNumber}}-1.x86_64.rpm'
-      #   transform: '{{distributionName}}/{{distributionName}}-{{projectEffectiveVersion}}-1.x86_64.rpm'
-      #   platform: 'linux-x86_64'
+      - path: '{{jpackageDir}}/spring-{{projectVersionNumber}}-1.x86_64.rpm'
+        transform: '{{distributionName}}/{{distributionName}}-{{projectEffectiveVersion}}-1.x86_64.rpm'
+        platform: 'linux-x86_64'
       - path: '{{jpackageDir}}/spring-{{projectVersionNumber}}-windows-x86_64.msi'
         transform: '{{distributionName}}/{{distributionName}}-{{projectEffectiveVersion}}-windows-x86_64.msi'
         platform: 'windows-x86_64'
