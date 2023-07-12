@@ -14,12 +14,12 @@ jobs:
     uses: ./.github/workflows/jr-build.yml
     with:
       ref: ${{ needs.precheck.outputs.ref }}
-  # step2:
-  #   needs: [precheck,step1]
-  #   uses: ./.github/workflows/jr-assemble.yml
-  #   with:
-  #     ref: ${{ needs.precheck.outputs.ref }}
-  #     version: ${{ needs.precheck.outputs.version }}
+  step20:
+    needs: [precheck,step1]
+    uses: ./.github/workflows/jr-assemble-javaarchive.yml
+    with:
+      ref: ${{ needs.precheck.outputs.ref }}
+      version: ${{ needs.precheck.outputs.version }}
   step21:
     needs: [precheck,step1]
     uses: ./.github/workflows/jr-assemble-jlink.yml
@@ -33,7 +33,7 @@ jobs:
       ref: ${{ needs.precheck.outputs.ref }}
       version: ${{ needs.precheck.outputs.version }}
   step3:
-    needs: [precheck,step22]
+    needs: [precheck,step20,step22]
     uses: ./.github/workflows/jr-release.yml
     secrets: inherit
     with:
