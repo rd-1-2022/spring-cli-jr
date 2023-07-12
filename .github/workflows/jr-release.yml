@@ -30,6 +30,12 @@ jobs:
           name: javaarchive
           path: out/jreleaser/assemble/spring-cli/java-archive
 
+      - name: Download jpackage
+        uses: actions/download-artifact@v3
+        with:
+          name: jpackage
+          path: out/jreleaser/assemble/spring-cli-installer/jpackage
+
       - name: Release
         uses: jreleaser/release-action@v2
         with:
