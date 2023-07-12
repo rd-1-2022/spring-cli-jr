@@ -31,6 +31,9 @@ jobs:
         with:
           name: fatjar
           path: build/libs
+      - name: Jdks
+        shell: bash
+        run: ./gradlew copyJdksFromCache setupJdks
       - name: Download jlink
         uses: actions/download-artifact@v3
         with:
