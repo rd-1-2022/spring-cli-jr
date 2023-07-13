@@ -56,6 +56,14 @@ jobs:
           arguments: assemble --assembler jpackage --select-current-platform
         env:
           JRELEASER_PROJECT_VERSION: ${{ inputs.version }}
+      - name: JReleaser output
+        if: always()
+        uses: actions/upload-artifact@v3
+        with:
+          name: jreleaser-jpackage-${{ runner.os }}
+          path: |
+            out/jreleaser/trace.log
+            out/jreleaser/output.properties
       - name: Upload jpackage
         uses: actions/upload-artifact@v3
         with:
