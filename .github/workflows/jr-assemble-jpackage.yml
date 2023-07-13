@@ -53,7 +53,7 @@ jobs:
       - name: JR Assemble
         uses: jreleaser/release-action@v2
         with:
-          arguments: assemble --assembler jpackage
+          arguments: assemble --assembler jpackage --select-current-platform
         env:
           JRELEASER_PROJECT_VERSION: ${{ inputs.version }}
       - name: Upload jpackage
