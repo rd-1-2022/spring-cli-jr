@@ -101,6 +101,6 @@ distributions:
       - path: '{{jpackageDir}}/spring-{{projectVersionNumber}}-1.x86_64.rpm'
         transform: '{{distributionName}}/{{distributionName}}-{{projectEffectiveVersion}}-1.x86_64.rpm'
         platform: 'linux-x86_64'
-      - path: '{{jpackageDir}}/spring-{{projectVersionNumber}}-windows-x86_64.msi'
+      - path: '{{jpackageDir}}/spring-{{projectVersionNumber}}.msi'
         transform: '{{distributionName}}/{{distributionName}}-{{projectEffectiveVersion}}-windows-x86_64.msi'
         platform: 'windows-x86_64'
