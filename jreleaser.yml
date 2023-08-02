@@ -34,6 +34,7 @@ assemble:
         ignoreMissingDeps: true
       additionalModuleNames:
         - java.desktop
+        - jdk.crypto.ec
       mainJar:
         path: 'build/libs/spring-cli-{{projectVersion}}.jar'
       targetJdks:
